@@ -1,0 +1,27 @@
+{
+  "manifest_version": 2,
+  "name": "Firemos",
+  "version": "1.0",
+  "description": "Send memo to your Memos instance.",
+  "homepage_url": "https://github.com/Skywt2003/firemos",
+  "icons": {
+    "48": "icons/memos.png"
+  },
+  "browser_action": {
+    "browser_style": true,
+    "default_icon": "icons/memos.png",
+    "default_title": "Memos",
+    "default_popup": "popup/add_memo.html"
+  },
+  "permissions": [
+    "storage",
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    "icons/memos.png"
+  ],
+  "options_ui": {
+    "browser_style": true,
+    "page": "options/options.html"
+  }
+}

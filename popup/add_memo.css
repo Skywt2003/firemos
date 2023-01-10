@@ -1,0 +1,13 @@
+textarea {
+    resize: vertical;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    padding: 3px;
+    font-size: 17px;
+}
+
+form {
+    margin: 5px;
+    padding: 5px;
+}
