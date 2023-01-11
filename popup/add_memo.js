@@ -1,32 +1,57 @@
-function sendMemo(){
-  if (document.getElementById("memo_content").value === "") return;
+function onError(error) {
+  console.log(`Error: ${error}`);
+}
 
-  function onError(error) {
-    console.log(`Error: ${error}`);
-  }
+async function sendMemo(){
+  if (document.querySelector("#memo_content").value === "") return;
 
   function onGot(item) {
     if (!String(item.memos_api)) return;
+    // console.log(document.querySelector("#memo_content").value);
     fetch(item.memos_api, {
       "headers": {
           "Content-Type": "application/json"
       },
-      "referrer": "https://memos.skywt.cn/",
       "body": JSON.stringify({
-        "content": String(document.getElementById("memo_content").value)
+        "content": String(document.querySelector("#memo_content").value)
       }),
       "method": "POST"
     });
   }
 
   var getting = browser.storage.local.get("memos_api");
-  getting.then(onGot, onError);
+  return getting.then(onGot, onError);
 }
 
-document.addEventListener("click", (event) => {
-  if (event.target.id !== "submit") {
-    return;
-  }
-  sendMemo();
+document.querySelector("#submit").addEventListener("click", (event) => {
+  var sending = sendMemo();
+  sending.then(
+    () => {
+      document.querySelector("#memo_content").value = "";
+      const evt = new Event('change');
+      document.querySelector("#memo_content").dispatchEvent(evt);
+    },
+    onError
+  )
 });
-  
+
+// Save memo when text changes
+
+function saveMemo(e) {
+  e.preventDefault();
+  browser.storage.local.set({
+    memo_content: document.querySelector("#memo_content").value
+  });
+}
+
+function restoreMemo() {
+  function setCurrentChoice(result) {
+    document.querySelector("#memo_content").value = result.memo_content || "";
+  }
+
+  var getting = browser.storage.local.get("memo_content");
+  getting.then(setCurrentChoice, onError);
+}
+
+document.addEventListener("DOMContentLoaded", restoreMemo);
+document.querySelector("#memo_content").addEventListener("change", saveMemo);
