@@ -13,6 +13,14 @@
     "default_title": "Memos",
     "default_popup": "popup/add_memo.html"
   },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+M"
+      },
+      "description": "Quickly open popup"
+    }
+  },
   "permissions": [
     "storage",
     "<all_urls>"
